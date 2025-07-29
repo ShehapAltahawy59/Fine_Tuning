@@ -1,0 +1,11 @@
+pymupdf
+regex
+nltk
+openai
+markdownify
+langchain
+python-dotenv
+autogen-core
+autogen-ext
+autogen-agentchat
+pydantic

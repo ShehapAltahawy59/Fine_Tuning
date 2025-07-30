@@ -208,8 +208,8 @@ docker run -p 8000:8000 egypt-qa-pipeline
 
 | Model      | ROUGE-L | BLEU |
 | ---------- | ------- | ---- |
-| Base Model | 0.12    | 0.0  |
-| Fine-Tuned | 0.09    | 0.0  |
+| Base Model | 0.09    | 0.0  |
+| Fine-Tuned | 0.12    | 0.0  |
 
 ⚠️ **Tiny improvement** in ROUGE due to:
 

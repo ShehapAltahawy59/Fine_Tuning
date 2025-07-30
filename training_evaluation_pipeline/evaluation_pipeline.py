@@ -46,39 +46,48 @@ def evaluate_model(model, tokenizer, dataset, description="Model"):
     predictions, references = [], []
     total_latency = 0
     
-    model.eval()
-    
-    for row in dataset["test"]:
-        answer = row.get("answer", "").strip()
+    for row in dataset:
         formatted = format_propmet(row)
-        
-        # Combine instruction + input into a single text prompt
         prompt = f"{formatted['instruction']}\n{formatted['input']}"
         inputs = tokenizer(prompt, return_tensors="pt", truncation=True).to(model.device)
         
         # Measure latency
         start_time = time.time()
-        outputs = model.generate(**inputs, max_length=MAX_GEN_LENGTH)
+        outputs = model.generate(
+                    **inputs,
+                    max_length=5000,
+                    temperature=0.7,       # Controls randomness (0.0-1.0+, lower = more deterministic)
+                    top_k=50,             # Consider top k most probable tokens at each step
+                    top_p=0.95,           # Nucleus sampling - consider smallest set with cumulative prob >= p
+                    do_sample=True,       # Enable sampling (required for temp/top_k/top_p)
+                    num_return_sequences=2 # Number of sequences to return
+                )
         latency = time.time() - start_time
         total_latency += latency
+        prompt_length = len(inputs.input_ids[0])
+        pred_full = tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
+        generated_text = pred_full[len(prompt):].strip()
         
-        pred = tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
-        
-        predictions.append(pred)
-        references.append(answer)
+        predictions.append(generated_text)
+        references.append(formatted["output"])
     
-    # Compute metrics
+    # Clean predictions and references
+    predictions = [str(p).strip() for p in predictions]
+    references = [str(r).strip() for r in references]
+    
+    # Metrics
     em_score = exact_match.compute(predictions=predictions, references=references)
-    rouge_score = rouge.compute(predictions=predictions, references=references)
+    rouge_scores = rouge.compute(predictions=predictions, references=references)
     bleu_score = bleu.compute(predictions=predictions, references=references)
     
-    avg_latency = total_latency / len(dataset["test"])
-    throughput = len(dataset["test"]) / total_latency if total_latency > 0 else 0
+    # Latency & throughput
+    avg_latency = total_latency / len(dataset)
+    throughput = len(dataset) / total_latency if total_latency > 0 else 0
     
     # Print results
     logger.info(f"\n📊 {description} Results:")
     logger.info(f"Exact Match: {em_score}")
-    logger.info(f"ROUGE: {rouge_score}")
+    logger.info(f"ROUGE: {rouge_scores}")
     logger.info(f"BLEU: {bleu_score}")
     logger.info(f"⚡ Avg Inference Latency: {avg_latency:.3f} sec/request")
     logger.info(f"🚀 Throughput: {throughput:.2f} requests/sec")

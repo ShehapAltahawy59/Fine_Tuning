@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 import time
-
+from . import API_KEY,tokenizer,model,MAX_NEW_TOKENS
 
 
 # ===== FASTAPI APP =====

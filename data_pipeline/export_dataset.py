@@ -1,3 +1,6 @@
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 import json
 def run(train, val, test,prefix="data_set/final/egypt_pdf_qa"):
     with open(f"{prefix}_train.jsonl", "a", encoding="utf-8") as f:

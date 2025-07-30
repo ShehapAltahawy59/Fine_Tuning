@@ -1,4 +1,7 @@
+import logging
 import re
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 def run(text, min_words=200, max_words=400):
     paragraphs = re.split(r"\n\s*\n", text)
     chunks = []

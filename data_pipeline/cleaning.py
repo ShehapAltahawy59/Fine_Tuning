@@ -1,5 +1,13 @@
 import re
 
+def normalize_text(text):
+        # Convert to lowercase and standardize terms
+        text = text.lower()
+        text = re.sub(r'\bev\b', 'electric vehicle', text)
+        text = re.sub(r'\bcharging station\b', 'charging point', text)
+        return text
+
+
 def run(text):
     # Merge broken lines
     text = re.sub(r'\n(?=[a-z])', ' ', text)  # join words split by line breaks
@@ -9,6 +17,9 @@ def run(text):
     cleaned = re.sub(r'^[^A-Z]*', '', text)  
     # Remove multiple spaces/newlines
     cleaned = re.sub(r'\s+', ' ', cleaned).strip()
-    return cleaned
 
-    return text.strip()
+    norm=normalize_text(cleaned)
+
+    return norm
+
+    

@@ -1,4 +1,5 @@
 # evaluation_pipeline.py
+import logging
 import os
 import time
 import evaluate
@@ -6,10 +7,17 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModel
 from datasets import load_dataset
 import torch
+import yaml
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 # ===== CONFIG =====
-MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.3"  # base model
-TUNED_MODEL_PATH = "./mistral_egypt_lora/final_model"  # tuned model folder
+with open('config.yaml') as f:
+    config = yaml.safe_load(f)
+
+MODEL_NAME = config['base_model']
+OUTPUT_DIR = config["output_dir"]
+TUNED_MODEL_PATH = f"{config["output_dir"]}/final_model"  # tuned model folder
 DATASET_PATH = "./data_set/final/egypt_pdf_qa_test.jsonl"
 MAX_GEN_LENGTH = 2500
 

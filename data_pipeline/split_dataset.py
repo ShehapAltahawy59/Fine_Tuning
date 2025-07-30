@@ -1,4 +1,7 @@
+import logging
 import random
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 def run(data, train_ratio=0.7, val_ratio=0.2, test_ratio=0.1):
     assert abs(train_ratio + val_ratio + test_ratio - 1.0) < 1e-6, "Ratios must sum to 1"
     

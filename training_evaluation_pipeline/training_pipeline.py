@@ -1,4 +1,5 @@
 # training_pipeline.py
+import logging
 import os
 from datasets import load_dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments, Trainer,BitsAndBytesConfig
@@ -11,14 +12,20 @@ import wandb
 import os
 from dotenv import load_dotenv
 from huggingface_hub import login
+import yaml
 load_dotenv()
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
+with open('config.yaml') as f:
+    config = yaml.safe_load(f)
+    
 huggingface_key = os.environ["huggingface_key"]
 login(huggingface_key)
 wandb_key = os.environ["wandb_key"]
 wandb.login(key=wandb_key)
-MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.3"
-OUTPUT_DIR = "./mistral_egypt_lora"
+MODEL_NAME = config['base_model']
+OUTPUT_DIR = config["output_dir"]
 RESUME_CHECKPOINT = None  # set path to resume, or None for fresh start
 MAX_LENGTH = 512
 def run():
@@ -74,7 +81,7 @@ def run():
     model = prepare_model_for_kbit_training(model)
 
     lora_config = LoraConfig(
-        r=64,
+        r=config['training_params']['lora_rank'],
         lora_alpha=16,
         target_modules=["q_proj", "v_proj","k_proj", "o_proj"],
         lora_dropout=0.1,
@@ -91,15 +98,15 @@ def run():
         output_dir="./mistral_qlora_egypt_closed",
         report_to="wandb",              #  enable W&B tracking
         run_name="mistral_qlora_egypt_closed",
-        per_device_train_batch_size=1,   
+        per_device_train_batch_size=config['training_params']['batch_size'],   
         per_device_eval_batch_size=1,    
         gradient_accumulation_steps=8,   # effective batch size
         eval_strategy="epoch",
         label_names=["labels"],
         logging_strategy="epoch",
         save_strategy="epoch",
-        num_train_epochs=2,
-        learning_rate=3e-4,
+        num_train_epochs=config['training_params']['num_epochs'],
+        learning_rate=config['training_params']['learning_rate'],
         fp16=True,
         gradient_checkpointing=True,     
         logging_dir="./logs",

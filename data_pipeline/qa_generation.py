@@ -1,8 +1,10 @@
 
+import logging
 from autogen_core import CancellationToken
 from autogen_agentchat.messages import TextMessage
 import json
-
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 async def generate_qa_from_chunk(chunk, agent):
     text_message = TextMessage(content=chunk, source="User")
     result = await agent.on_messages(

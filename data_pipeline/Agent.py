@@ -1,3 +1,4 @@
+import logging
 from autogen_core.models import ModelInfo
 from autogen_ext.models.openai import OpenAIChatCompletionClient
 from autogen_agentchat.agents import AssistantAgent
@@ -5,7 +6,8 @@ from dotenv import load_dotenv
 from pydantic import BaseModel
 from typing import List
 import os
-
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 load_dotenv()
 
 gemini_api_key = os.environ["GEMINI_API_KEY"]

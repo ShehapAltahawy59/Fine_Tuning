@@ -60,3 +60,8 @@ if __name__ == "__main__":
 
     print(" evalution completed")
     logger.info("evalution completed")
+
+    from app import serving
+    logger.info("Starting deployment")
+
+    serving.run()

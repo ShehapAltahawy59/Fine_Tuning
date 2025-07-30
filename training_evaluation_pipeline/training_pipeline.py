@@ -123,7 +123,7 @@ def run():
 
     # ===== DEBUG INFO =====
     trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    print(f"✅ Trainable Parameters: {trainable_params}")
+    logger.info(f"✅ Trainable Parameters: {trainable_params}")
 
     # ===== TRAIN =====
     if RESUME_CHECKPOINT:
@@ -135,4 +135,4 @@ def run():
     model.save_pretrained(os.path.join(OUTPUT_DIR, "final_model"))
     tokenizer.save_pretrained(os.path.join(OUTPUT_DIR, "final_model"))
 
-    print("🎯 Training Complete. Model saved.")
+    logger.info("🎯 Training Complete. Model saved.")

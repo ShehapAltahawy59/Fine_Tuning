@@ -76,21 +76,21 @@ def evaluate_model(model, tokenizer, dataset, description="Model"):
     throughput = len(dataset["test"]) / total_latency if total_latency > 0 else 0
     
     # Print results
-    print(f"\n📊 {description} Results:")
-    print(f"Exact Match: {em_score}")
-    print(f"ROUGE: {rouge_score}")
-    print(f"BLEU: {bleu_score}")
-    print(f"⚡ Avg Inference Latency: {avg_latency:.3f} sec/request")
-    print(f"🚀 Throughput: {throughput:.2f} requests/sec")
+    logger.info(f"\n📊 {description} Results:")
+    logger.info(f"Exact Match: {em_score}")
+    logger.info(f"ROUGE: {rouge_score}")
+    logger.info(f"BLEU: {bleu_score}")
+    logger.info(f"⚡ Avg Inference Latency: {avg_latency:.3f} sec/request")
+    logger.info(f"🚀 Throughput: {throughput:.2f} requests/sec")
 
 
 def run():
     # ===== LOAD BASE MODEL =====
-    print("\nLoading Base Model...")
+    logger.info("\nLoading Base Model...")
     base_model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, device_map="auto", torch_dtype=torch.float16)
     evaluate_model(base_model, tokenizer, dataset, description="Base Model")
 
     # ===== LOAD TUNED MODEL =====
-    print("\nLoading Tuned Model...")
+    logger.info("\nLoading Tuned Model...")
     tuned_model = AutoModelForCausalLM.from_pretrained(TUNED_MODEL_PATH, device_map="auto", torch_dtype=torch.float16)
     evaluate_model(tuned_model, tokenizer, dataset, description="Tuned Model")

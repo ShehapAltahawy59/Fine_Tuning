@@ -4,23 +4,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 import time
 
-# ===== CONFIG =====
-MODEL_PATH = "./models/mistral_egypt_latest"
-MAX_NEW_TOKENS = 2000
-API_KEY = "afb5qdvw6qfwrgqfe-wegw51"  # Replace with secure key
 
-# ===== LOAD MODEL =====
-print("🚀 Loading tuned model...")
-tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
-tokenizer.pad_token = tokenizer.eos_token
-
-model = AutoModelForCausalLM.from_pretrained(
-    MODEL_PATH,
-    device_map="auto",
-    torch_dtype=torch.float16
-)
-model.eval()
-print("✅ Model loaded for serving.")
 
 # ===== FASTAPI APP =====
 app = FastAPI(title="Egypt History QA API", version="1.0")
@@ -53,3 +37,12 @@ def predict(request: QueryRequest, x_api_key: str = Header(...)):
 @app.get("/")
 def root():
     return {"message": "Egypt History QA API is running!"}
+
+
+def run(self):
+        import uvicorn
+        uvicorn.run(
+            self.app,
+            host="0.0.0.0",
+            port=self.config['deployment']['port']
+        )

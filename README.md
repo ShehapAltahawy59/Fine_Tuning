@@ -1,4 +1,3 @@
-```markdown
 # 🏛️ Egypt History QA - Fine-Tuning Small LLM
 
 This project implements an **end-to-end pipeline** to fine-tune a small LLM (≤7B parameters) on a **domain-specific QA dataset (Egyptian history)** and deploy it as an API.
@@ -281,5 +280,5 @@ graph TD
     G --> H[FastAPI Server]
     H --> I[Dockerized Deployment]
     I --> J[GitHub Actions CI/CD]
-```
+
 

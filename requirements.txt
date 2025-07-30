@@ -1,3 +1,4 @@
+tf-keras
 pymupdf
 regex
 nltk
@@ -9,3 +10,12 @@ autogen-core
 autogen-ext
 autogen-agentchat
 pydantic
+datasets
+transformers
+peft
+torch
+wandb
+evaluate
+accelerate
+bitsandbytes
+rouge_score

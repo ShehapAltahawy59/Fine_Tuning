@@ -1,2 +1,3 @@
 .env
 /data_pipeline/data_set/raw/
+/mistral_egypt_lora/

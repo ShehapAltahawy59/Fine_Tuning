@@ -30,8 +30,8 @@ async def run(chunks, client):
                 else:
                     qas_parsed = qa
                 dataset.append({
-                    "context": chunk,
-                    "question": qas_parsed["question"],
+                    "Context": chunk,
+                    "question": qas_parsed['question'],
                     "answer": qas_parsed["answer"]
                 })
                 await asyncio.sleep(10)

@@ -1,7 +1,7 @@
 import asyncio
 import os
 from data_pipeline import  extraction, cleaning, chunking, qa_generation, split_dataset, export_dataset,Agent
-
+from training_evaluation_pipeline import training_pipeline,evaluation_pipeline
 if __name__ == "__main__":
     print("🚀 Starting Data Pipeline...")
 
@@ -33,3 +33,9 @@ if __name__ == "__main__":
     export_dataset.run(train_data, val_data, test_data)
 
     print("✅ Data pipeline completed successfully.")
+
+    print("Step 8: training pipeline...")
+    training_pipeline.run()
+
+    print("Step 9: evalution pipeline...")
+    evaluation_pipeline.run()

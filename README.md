@@ -117,19 +117,36 @@ Closed-book is better to show improvement, but needs **larger dataset** and **mo
 ## 📌 2. Repository Structure
 ```
 
-main/
-├── app/
-│    ├── serving.py         # FastAPI serving API
-├── models/
-│    ├── mistral\_egypt\_latest/   # Tuned model for serving
-├── orchestrator.py         # Runs data → training → evaluation
-├── data\_pipeline.py        # Extract & clean data
-├── training\_pipeline.py    # LoRA fine-tuning
-├── evaluation\_pipeline.py  # Compare base vs tuned model
-├── Dockerfile              # Docker for deployment
-├── requirements.txt
-├── README.md
+app/                     # FastAPI application
+│   ├── __init__.py      # Package initialization
+│   └── serving.py       # API endpoints (missing in current structure)
 
+data_pipeline/           # Data processing pipeline
+│   ├── __init__.py      # Package exports
+│   ├── Agent.py         # AutoGen agent implementation
+│   ├── chunking.py      # Document splitting logic
+│   ├── cleaning.py      # Text normalization
+│   ├── export_dataset.py # Final dataset formatting  
+│   ├── extraction.py    # PyMuPDF text extraction
+│   ├── qa_generation.py # AutoGen QA generation
+│   └── split_dataset.py # Train/val/test splitting
+
+data_set/final/          # Processed datasets
+│   ├── egypt_pdf_qa_*.jsonl  # QA datasets
+│   └── test.jsonl       # Benchmark dataset
+
+models/mistral_egypt_latest/  # Fine-tuned model
+│   ├── adapter_config.json   # LoRA config
+│   └── adapter_model.bin     # Trained weights
+main.py                 # Pipeline orchestrator
+training_evaluation_pipeline/  # (Suggested folder)
+   ├── train_pipeline.py         # Fine-tuning script
+   └── evaluation_pipeline.py 
+config.yaml              # Centralized parameters:
+                         # - data paths
+                         # - model hyperparameters
+                         # - API settings
+Dockerfile              # Containerization specs
 ````
 
 ---
@@ -139,7 +156,7 @@ main/
 ### **A. Development Pipeline (Kaggle or Local)**
 ```bash
 # From main branch
-python orchestrator.py
+python main.py
 ````
 
 This runs:
@@ -147,14 +164,8 @@ This runs:
 1. **Data preparation** → cleans and formats Egyptian history data
 2. **Fine-tuning** → LoRA-based training (supports resume from checkpoint)
 3. **Evaluation** → Compares Base vs Tuned (Exact Match, ROUGE, BLEU, Latency)
-
+4. Serving Locally
 ---
-
-### **B. Serving Locally**
-
-```bash
-uvicorn app.serving:app --host 0.0.0.0 --port 8000
-```
 
 Test with:
 
@@ -251,22 +262,6 @@ Here's a comprehensive breakdown of the technologies used in your Egypt History 
 
 ---
 
-### **🛠️ Technical Tradeoffs**
-1. **AutoGen vs Custom Prompting**  
-   - *Chose AutoGen*: For multi-agent debate improving QA quality  
-   - *Tradeoff*: Higher complexity than direct GPT-4 calls
-
-2. **LoRA vs Full Fine-Tuning**  
-   - *Chose LoRA*: Kaggle GPU constraints  
-   - *Tradeoff*: Potential slight performance drop vs full tuning
-
-3. **Mistral-7B vs LLaMA-2-7B**  
-   - *Chose Mistral*: Better out-of-box factual performance  
-   - *Tradeoff*: Fewer community fine-tunes available
-
----
-
-
 
 ### **📊 Pipeline Diagram Proposal**
 ```mermaid
@@ -278,7 +273,6 @@ graph TD
     E --> F[LoRA Fine-Tuning]
     F --> G[Mistral-7B-Egypt]
     G --> H[FastAPI Server]
-    H --> I[Dockerized Deployment]
-    I --> J[GitHub Actions CI/CD]
+    
 
 

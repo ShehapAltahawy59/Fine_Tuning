@@ -146,7 +146,7 @@ Closed-book is better to show improvement, but needs **larger dataset** and **mo
 
 app/                     # FastAPI application
 │   ├── __init__.py      # Package initialization
-│   └── serving.py       # API endpoints (missing in current structure)
+│   └── serving.py       # API endpoints 
 
 data_pipeline/           # Data processing pipeline
 │   ├── __init__.py      # Package exports
@@ -166,7 +166,7 @@ models/mistral_egypt_lora/  # Fine-tuned model
 │   ├── adapter_config.json   # LoRA config
 │   └── adapter_model.bin     # Trained weights
 main.py                 # Pipeline orchestrator
-training_evaluation_pipeline/  # (Suggested folder)
+training_evaluation_pipeline/  
    ├── train_pipeline.py         # Fine-tuning script
    └── evaluation_pipeline.py 
 config.yaml              # Centralized parameters:
@@ -242,10 +242,6 @@ docker run -p 8000:8000 egypt-qa-pipeline
 
 * Small dataset (limited QA generation from Gemini Free Tier)
 * Kaggle compute limits (few epochs)
-
----
-
-Here's a comprehensive breakdown of the technologies used in your Egypt History QA pipeline, along with their specific purposes and justifications:
 
 ---
 

@@ -5,8 +5,9 @@ from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 import time
-
+from dotenv import load_dotenv
 import yaml
+load_dotenv()
 huggingface_key = os.environ["huggingface_key"]
 login(huggingface_key)
 with open('config.yaml') as f:

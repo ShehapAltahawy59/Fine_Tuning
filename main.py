@@ -1,6 +1,9 @@
 import asyncio
 import logging
 import os
+
+import yaml
+from app.serving import APIServer
 from data_pipeline import  extraction, cleaning, chunking, qa_generation, split_dataset, export_dataset,Agent
 from training_evaluation_pipeline import training_pipeline,evaluation_pipeline
 
@@ -64,4 +67,9 @@ if __name__ == "__main__":
     from app import serving
     logger.info("step 10: Starting deployment")
 
-    serving.run()
+    with open("config.yaml") as f:
+        config = yaml.safe_load(f)
+    
+    # Initialize and run
+    server = APIServer(config)
+    server.run()

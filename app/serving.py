@@ -39,10 +39,22 @@ def root():
     return {"message": "Egypt History QA API is running!"}
 
 
-def run(self):
+class APIServer:
+    def __init__(self, config):
+        self.app = app
+        self.config = config
+    
+    def run(self):
         import uvicorn
         uvicorn.run(
             self.app,
             host="0.0.0.0",
             port=self.config['deployment']['port']
         )
+# def run(self):
+#         import uvicorn
+#         uvicorn.run(
+#             self.app,
+#             host="0.0.0.0",
+#             port=self.config['deployment']['port']
+#         )

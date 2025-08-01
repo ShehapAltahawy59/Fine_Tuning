@@ -190,7 +190,7 @@ This runs:
 
 1. **Data preparation** → cleans and formats Egyptian history data
 2. **Fine-tuning** → LoRA-based training (supports resume from checkpoint)
-3. **Evaluation** → Compares Base vs Tuned (Exact Match, ROUGE, BLEU, Latency)
+3. **Evaluation** → Compares Base vs Tuned (ROUGE, BLEU, Latency)
 4. Serving Locally
 ---
 

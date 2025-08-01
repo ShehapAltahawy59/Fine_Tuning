@@ -110,6 +110,7 @@ MODEL_NAME = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"  # 10x smaller parameters
 After 15 epochs with TinyLlama:
 ![WandB Training Loss Curve](images/eval_loss.png)
 ![imporoment](images/metric.png)
+
 *Key Observations*:
 - 62% loss reduction (2.1 → 0.8)
 - Stable convergence after epoch 15

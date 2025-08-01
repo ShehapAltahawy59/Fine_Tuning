@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     print("🤖 Step 5: Generating Q/A...")
     logger.info("Step 5: Generating Q/A...")
-    data_set =  asyncio.run(qa_generation.run(chunks[:1],agent))
+    data_set =  asyncio.run(qa_generation.run(chunks,agent))
     # 6️⃣ Split into Train/Val/Test
     print("📊 Step 6: Splitting dataset...")
     logger.info("Step 6: Splitting dataset...")
@@ -48,20 +48,20 @@ if __name__ == "__main__":
     print("✅ Data pipeline completed successfully.")
 
     print("Step 8: training pipeline...")
-    logger.info("Step 8: training pipeline...")
-    training_pipeline.run()
+    # logger.info("Step 8: training pipeline...")
+    # training_pipeline.run()
 
-    print(" training completed")
-    logger.info("training completed")
+    # print(" training completed")
+    # logger.info("training completed")
 
-    print("Step 9: evalution pipeline...")
-    logger.info("Step 9: evalution pipeline...")
-    evaluation_pipeline.run()
+    # print("Step 9: evalution pipeline...")
+    # logger.info("Step 9: evalution pipeline...")
+    # evaluation_pipeline.run()
 
-    print(" evalution completed")
-    logger.info("evalution completed")
+    # print(" evalution completed")
+    # logger.info("evalution completed")
 
     from app import serving
-    logger.info("Starting deployment")
+    logger.info("step 10: Starting deployment")
 
     serving.run()

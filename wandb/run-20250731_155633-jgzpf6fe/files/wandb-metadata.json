@@ -1,0 +1,31 @@
+{
+  "os": "Windows-10-10.0.19045-SP0",
+  "python": "CPython 3.12.2",
+  "startedAt": "2025-07-31T12:56:35.207573Z",
+  "program": "d:\\New folder (10)\\Fine_Tuning\\main.py",
+  "codePath": "main.py",
+  "git": {
+    "remote": "https://github.com/ShehapAltahawy59/Fine_Tuning.git",
+    "commit": "4710b86aed5e9cbe45867b500017d947fc306b22"
+  },
+  "email": "shehapkhalil62@gmail.com",
+  "root": "D:\\New folder (10)\\Fine_Tuning",
+  "host": "Administrator",
+  "executable": "C:\\Users\\mosta\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "codePathLocal": "main.py",
+  "cpu_count": 2,
+  "cpu_count_logical": 4,
+  "disk": {
+    "/": {
+      "total": "1000200957952",
+      "used": "663692705792"
+    }
+  },
+  "memory": {
+    "total": "8496844800"
+  },
+  "cpu": {
+    "count": 2,
+    "countLogical": 4
+  }
+}

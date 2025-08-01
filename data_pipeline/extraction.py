@@ -3,6 +3,8 @@ import os
 import fitz
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
 def run(folder_path):
     
     full_text =""

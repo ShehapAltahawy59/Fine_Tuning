@@ -4,7 +4,7 @@ data_sources:
   - type: "pdf"
     paths: ["data_set/raw/"]
   
-base_model: "mistralai/Mistral-7B-Instruct-v0.3"
+base_model: "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 output_dir: "./mistral_egypt_lora"
 training_params:
   lora_rank: 64
@@ -12,5 +12,5 @@ training_params:
   batch_size: 1
   num_epochs: 3
 deployment:
-  api_auth_key: "ev_charging_api_key"
+  api_auth_key: "afb5qdvw6qfwrgqfe-wegw51"
   port: 8000

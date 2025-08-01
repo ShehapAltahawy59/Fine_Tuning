@@ -1,15 +1,20 @@
+import os
 from fastapi import FastAPI, HTTPException, Header
+from huggingface_hub import login
 from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 import time
 
+import yaml
+huggingface_key = os.environ["huggingface_key"]
+login(huggingface_key)
 with open('config.yaml') as f:
     config = yaml.safe_load(f)
 # ===== CONFIG =====
-MODEL_PATH = "./models/mistral_egypt_latest"
-MAX_NEW_TOKENS = 2000
-API_KEY = config['api_auth_key']  # Replace with secure key
+MODEL_PATH = f"{config['output_dir']}/final_model"
+MAX_NEW_TOKENS = 100
+API_KEY = config['deployment']['api_auth_key']  # Replace with secure key
 
 # ===== LOAD MODEL =====
 print("🚀 Loading tuned model...")

@@ -94,7 +94,33 @@ The fine-tuned model performed **almost the same as the base model**.
 - **Reason:**  
 The base model (Mistral/LLaMA) already learned to extract answers from context. Fine-tuning didn’t add much because the task matches pretraining capability.
 
----
+
+### 🐭 Switching to TinyLlama for Clearer Signals
+We pivoted to a smaller model for better PoC:
+```python
+MODEL_NAME = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"  # 10x smaller parameters
+```
+
+**Advantages Observed**:
+- Trained 15 epochs 
+- Clearer improvement metrics from lower base capability
+- Efficient GPU usage (runs on T4 with QLoRA)
+
+### 📉 Training Metrics (WandB)
+After 15 epochs with TinyLlama:
+![WandB Training Loss Curve](images/eval_loss.png)
+![imporoment](images/metric.png)
+*Key Observations*:
+- 62% loss reduction (2.1 → 0.8)
+- Stable convergence after epoch 15
+- No overfitting thanks to LoRA
+
+### 🏆 Final Benchmark Comparison
+| Model               | ROUGE-L | BLUE | Latency |
+|---------------------|---------|------|---------|
+| TinyLlama (Base)    | 0.03    | 0%  | 1.9s   |
+| TinyLlama (Tuned)   | **0.22**| 6%  | 16s   |
+
 
 ### **Closed-Book Approach (Second Attempt)**
 - **Format:**  

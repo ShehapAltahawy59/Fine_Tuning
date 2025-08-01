@@ -162,7 +162,7 @@ data_set/final/          # Processed datasets
 │   ├── egypt_pdf_qa_*.jsonl  # QA datasets
 │   └── test.jsonl       # Benchmark dataset
 
-models/mistral_egypt_latest/  # Fine-tuned model
+models/mistral_egypt_lora/  # Fine-tuned model
 │   ├── adapter_config.json   # LoRA config
 │   └── adapter_model.bin     # Trained weights
 main.py                 # Pipeline orchestrator
